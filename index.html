@@ -1,0 +1,173 @@
+<head>
+	<script charset="UTF-8">
+	
+	var tabToAlien = {
+		'A' : 'ᐃ',
+		'B' : 'ᐵ',
+		'C' : 'ᓕ',
+		'D' : 'ᑲ',
+		'E' : 'ᓼ',
+		'F' : 'ᕄ',
+		'G' : 'ᖉ',
+		'H' : 'ᖨ',
+		'I' : 'ᗎ',
+		'J' : 'ᗐ',
+		'K' : 'ᗵ',
+		'L' : 'ᣭ',
+		'M' : 'ᣱ',
+		'N' : 'ᣌ',
+		'O' : 'ᕘ',
+		'P' : 'ᕳ',
+		'Q' : 'ᒺ',
+		'R' : 'ᖀ',
+		'S' : 'ᓶ',
+		'T' : 'ᐯ',
+		'U' : 'ᖶ',
+		'V' : 'ᙧ',
+		'W' : '?',
+		'X' : '?',
+		'Y' : 'ᙽ',
+		'Z' : '?'
+	};
+
+	var tabFromAlien = {
+		'ᐃ' : 'A',
+		'ᐵ' : 'B',
+		'ᓕ' : 'C',
+		'ᑲ' : 'D',
+		'ᓼ' : 'E',
+		'ᕄ' : 'F',
+		'ᖉ' : 'G',
+		'ᖨ' : 'H',
+		'ᗎ' : 'I',
+		'ᗐ' : 'J',
+		'ᗵ' : 'K',
+		'ᣭ' : 'L',
+		'ᣱ' : 'M',
+		'ᣌ' : 'N',
+		'ᕘ' : 'O',
+		'ᕳ' : 'P',
+		'ᒺ' : 'Q',
+		'ᖀ' : 'R',
+		'ᓶ' : 'S',
+		'ᐯ' : 'T',
+		'ᖶ' : 'U',
+		'ᙧ' : 'V',
+		'?' : 'W',
+		'?' : 'X',
+		'ᙽ' : 'Y',
+		'?' : 'Z'  
+	};
+
+	var inputHuman;
+	var inputAlien;
+	var listAlien;
+
+
+	function init(){
+		inputHuman = document.querySelector('#human');
+		inputAlien = document.querySelector('#alien');
+		listAlien = document.querySelector('#listAlien');
+		for(var b in tabToAlien){
+			var myInput = document.createElement("input");
+			myInput.type = "button";
+			myInput.name = tabToAlien[b];
+			myInput.value = b + '  ' +tabToAlien[b];
+			myInput.alienValue = tabToAlien[b];
+			myInput.style = 'margin:1px; width:80px; height:60px; font-size:x-large;';
+			myInput.onclick = function(event){
+				addAlien(event.target.alienValue);
+			};
+			listAlien.appendChild(myInput);
+		}
+	  
+	  inputHuman.value = 'SI HOLA ES GATO DE LOS MAYANS';
+	  inputAlien.value = 'ᓶᗎ ᖨᕘᣭᐃ ᓼᓶ ᖉᐃᐯᕘ ᑲᓼ ᣭᕘᓶ ᣱᐃᙽᐃᣌᓶ';
+
+	}
+
+
+	function addAlien(txt){
+	 inputAlien.value += txt;
+	}
+
+
+	function toAlien(entry){
+		var txt = entry.toLocaleUpperCase();
+		var result = '';
+		for(var b of txt){
+			if(b!='?') {
+				if(tabToAlien.hasOwnProperty(b)){
+					result += tabToAlien[b];
+				} else {
+					result += b;
+				}
+			} else {
+				result += '?';
+			}
+		}
+		return result;
+	}
+
+
+	function fromAlien(entry){
+		var txt = entry;
+		var result = '';
+		for(var b of txt){
+			if(b!='?') {
+				if(tabFromAlien.hasOwnProperty(b)){
+					result += tabFromAlien[b];
+				} else {
+					result += b;
+				}
+			} else {
+				result += '?';
+			}
+		}
+		return result;
+	}
+
+
+	function translateToAlien(){
+		inputAlien.value = toAlien(inputHuman.value);
+	}
+
+	function translateToHuman(){
+		inputHuman.value = fromAlien(inputAlien.value);
+	}
+
+
+	document.addEventListener("DOMContentLoaded", function(event) { 
+		var test = toAlien('ANDRES');
+		console.log(test);
+		var test2 = fromAlien(test);
+		console.log(test2);
+		var test3 = fromAlien('ᓶᗎ ᖨᕘᣭᐃ ᓼᓶ ᖉᐃᐯᕘ ᑲᓼ ᣭᕘᓶ ᣱᐃᙽᐃᣌᓶ');
+		console.log(test3);
+		var test4 = toAlien('SI HOLA ES GATO DE LOS MAYANS');
+		console.log(test4);
+		init();
+	});
+
+	
+	</script>
+</head>
+
+<body>
+	<div>
+		<label for="human">human</label><br>
+		<textarea cols="75" rows="10" type="text" id="human"></textarea>
+	</div>
+	<div>
+		<label for="human">alien</label><br>
+		<textarea cols="75" rows="10" type="text" id="alien"></textarea>
+	</div>
+
+	<div id="listAlien" style="width:580px; margin:2px; padding:2px">
+
+	</div>
+
+	<input type="button" value="toAlien" onclick="translateToAlien()"/>
+	<input type="button" value="toHuman" onclick="translateToHuman()"/>
+
+</body>
