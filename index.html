@@ -88,7 +88,13 @@
 
 
 	function addAlien(txt){
-	 inputAlien.value += txt;
+		var posStart = inputAlien.selectionStart;
+		var posEnd = inputAlien.selectionEnd;
+		var oldVal = inputAlien.value;
+		inputAlien.value = oldVal.slice(0, posStart) + txt + oldVal.slice(posEnd);
+		
+		inputAlien.focus();
+		inputAlien.setSelectionRange(posStart+1,posStart+1);
 	}
 
 
