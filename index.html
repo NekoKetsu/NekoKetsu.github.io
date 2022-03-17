@@ -99,7 +99,8 @@
 
 
 	function toAlien(entry){
-		var txt = entry.toLocaleUpperCase();
+		var txt = entry.toLocaleUpperCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+		
 		var result = '';
 		for(var b of txt){
 			if(b!='?') {
